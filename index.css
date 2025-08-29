@@ -1,0 +1,340 @@
+:root {
+  --primary-bg: #121212;
+  --secondary-bg: #1e1e1e;
+  --text-color: #e0e0e0;
+  --primary-color: #ff4500; /* OrangeRed */
+  --primary-hover: #ff6347; /* Tomato */
+  --border-color: #333;
+  --error-color: #ffcdd2;
+  --error-bg: #b71c1c;
+  --font-family: 'Noto Sans TC', sans-serif;
+  --glow-color: rgba(255, 69, 0, 0.5);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--primary-bg);
+  background-image: radial-gradient(circle at bottom, rgba(255, 100, 0, 0.15), transparent 50%);
+  background-attachment: fixed;
+  color: var(--text-color);
+  line-height: 1.6;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+#root {
+  width: 100%;
+  max-width: 800px;
+}
+
+.container {
+  background-color: var(--secondary-bg);
+  padding: 2.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px var(--glow-color);
+  animation: fadeIn 0.5s ease-in-out;
+  position: relative;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1.5rem;
+}
+
+header h1 {
+  color: var(--primary-color);
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px var(--glow-color);
+}
+
+header p {
+  font-size: 1.1rem;
+  color: #a0a0a0;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.label-row a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+
+.label-row a:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+
+label {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #f0f0f0;
+}
+
+textarea,
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-family: var(--font-family);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: #252525;
+  color: var(--text-color);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(255, 69, 0, 0.25);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+  width: 100%;
+  box-shadow: 0 0 15px var(--glow-color);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  box-shadow: 0 0 25px var(--glow-color);
+}
+
+.btn:disabled {
+  background-color: #444;
+  color: #888;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.result-section {
+  margin-top: 1rem;
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: #252525;
+  min-height: 100px;
+  animation: fadeIn 0.5s;
+}
+
+.result-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+    color: #f0f0f0;
+}
+
+.result-content {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.placeholder-text {
+  color: #888;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error-message {
+  background-color: var(--error-bg);
+  color: var(--error-color);
+  border: 1px solid #ff7961;
+  padding: 1rem;
+  border-radius: 6px;
+  text-align: center;
+  margin-top: 1rem;
+  animation: fadeIn 0.3s;
+}
+
+/* --- Animation Overlay Styles --- */
+.animation-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(10, 0, 0, 0.9);
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeInOverlay 0.3s ease-out forwards;
+}
+
+@keyframes fadeInOverlay {
+  to {
+    opacity: 1;
+  }
+}
+
+.flame-wrapper {
+  filter: blur(5px) contrast(10);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+}
+
+.flame {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  position: absolute;
+  animation: move-flame 4s infinite cubic-bezier(0.36, 0.45, 0.63, 0.53);
+}
+
+.flame:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.flame:nth-child(3) {
+  animation-delay: 1s;
+}
+
+@keyframes move-flame {
+  0%, 100% {
+    transform: translate(0, 20px) scale(1.2, 0.8);
+    background-color: #ff6347; /* Tomato */
+  }
+  25% {
+    transform: translate(-20px, -15px) scale(0.9, 1.1);
+    background-color: var(--primary-color);
+  }
+  50% {
+    transform: translate(0, -40px) scale(1.1, 0.9);
+    background-color: #ffd700; /* Gold */
+  }
+  75% {
+    transform: translate(20px, -15px) scale(0.9, 1.1);
+    background-color: var(--primary-hover);
+  }
+}
+
+.ash-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.95);
+  animation: fadeInAsh 1s forwards;
+}
+
+@keyframes fadeInAsh {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.disaster-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  font-size: 10rem;
+  font-weight: 900;
+  color: var(--primary-color);
+  text-shadow: 0 0 25px var(--glow-color);
+  animation: popInIcon 0.5s 0.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+}
+
+@keyframes popInIcon {
+  to {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
