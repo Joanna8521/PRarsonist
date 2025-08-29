@@ -2,25 +2,16 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { createRoot } from 'react-dom/client';
 import { GoogleGenAI } from "@google/genai";
 
-const API_KEY_KEY = 'gemini_api_key';
+// Initialize the GoogleGenAI client instance.
+// The API key MUST be provided via the process.env.API_KEY environment variable.
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 const App = () => {
-    const [apiKey, setApiKey] = useState('');
     const [crisisDescription, setCrisisDescription] = useState('');
     const [generatedStatement, setGeneratedStatement] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [showCompletionAnimation, setShowCompletionAnimation] = useState(false);
-
-    useEffect(() => {
-        try {
-            const savedApiKey = localStorage.getItem(API_KEY_KEY) || '';
-            setApiKey(savedApiKey);
-        } catch (e) {
-            console.error("Failed to access localStorage:", e);
-            setError("無法讀取您的設定。請確保您的瀏覽器允許使用 localStorage。");
-        }
-    }, []);
 
     useEffect(() => {
         if (isLoading || showCompletionAnimation) {
@@ -33,24 +24,7 @@ const App = () => {
         };
     }, [isLoading, showCompletionAnimation]);
     
-    const handleApiKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newApiKey = e.target.value;
-        setApiKey(newApiKey);
-        try {
-            localStorage.setItem(API_KEY_KEY, newApiKey);
-        } catch (e) {
-             console.error("Failed to save API key to localStorage:", e);
-             setError("無法儲存您的 API 金鑰。")
-        }
-    };
-
-
     const handleGenerate = useCallback(async () => {
-        if (!apiKey.trim()) {
-            setError('請先輸入您的 Gemini API 金鑰！');
-            return;
-        }
-
         if (!crisisDescription.trim()) {
             setError('請先描述您遇到的公關危機！');
             return;
@@ -61,8 +35,6 @@ const App = () => {
         setGeneratedStatement('');
 
         try {
-            const ai = new GoogleGenAI({ apiKey });
-            
             const systemInstruction = `你是一位登峰造極的公關災難大師，專門撰寫能引發史上最大炎上的『提油救火』聲明稿。你的核心目標是：徹底摧毀品牌形象，點燃所有人的怒火，展現出無與倫比的愚蠢與狂妄。
 
 你的指導原則如下，必須嚴格遵守：
@@ -95,12 +67,12 @@ const App = () => {
 
         } catch (e) {
             console.error(e);
-            setError('糟糕，產生器好像也出包了。請檢查您的 API 金鑰是否正確、網路連線或稍後再試。');
+            setError('糟糕，產生器好像也出包了。請檢查您的網路連線或稍後再試。');
             setShowCompletionAnimation(false);
         } finally {
             setIsLoading(false);
         }
-    }, [crisisDescription, apiKey]);
+    }, [crisisDescription]);
 
     return (
         <div className="container">
@@ -109,23 +81,6 @@ const App = () => {
                 <p>把小火苗燒成燎原大火，自備油罐車的我們是專業的！</p>
             </header>
             <main>
-                <div className="form-group">
-                    <div className="label-row">
-                         <label htmlFor="api-key">Gemini API 金鑰</label>
-                         <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">
-                            (取得金鑰)
-                        </a>
-                    </div>
-                    <input
-                        type="password"
-                        id="api-key"
-                        value={apiKey}
-                        onChange={handleApiKeyChange}
-                        placeholder="請在此貼上您的 Gemini API 金鑰"
-                        aria-required="true"
-                    />
-                </div>
-
                 <div className="form-group">
                     <label htmlFor="crisis-description">公關危機說明</label>
                     <textarea
@@ -140,7 +95,7 @@ const App = () => {
                 <button
                     onClick={handleGenerate}
                     className="btn btn-primary"
-                    disabled={isLoading || !apiKey.trim()}
+                    disabled={isLoading}
                     aria-label="產生提油救火公關稿"
                 >
                     {isLoading ? <div className="loading-spinner"></div> : '🔥'}
